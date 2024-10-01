@@ -10,3 +10,5 @@ build: install migrate
 run-server:
 	python manage.py runserver
 
+dev:
+	poetry run python3 manage.py runserver
