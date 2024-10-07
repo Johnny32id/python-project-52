@@ -1,14 +1,15 @@
 install:
 	poetry install
-	poetry run python manage.py migrate
 
 migrate:
-	poetry run python3 manage.py migrate
-
-build: install migrate
-
-run-server:
-	python manage.py runserver
+	poetry run python manage.py makemigrations
+	poetry run python manage.py migrate
 
 dev:
-	poetry run python3 manage.py runserver
+	poetry run python manage.py runserver
+
+start:
+	poetry run gunicorn -w 2 -b 0.0.0.0:8000 task_manager.wsgi
+
+lint:
+	poetry run flake8 task_manager
