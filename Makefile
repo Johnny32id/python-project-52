@@ -9,7 +9,7 @@ dev:
 	poetry run python manage.py runserver
 
 start:
-	poetry run gunicorn -w 2 task_manager.wsgi
+	poetry run python -m gunicorn task_manager.asgi:application -k uvicorn.workers.UvicornWorker
 
 lint:
 	poetry run flake8 task_manager
