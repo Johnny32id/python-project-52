@@ -15,6 +15,7 @@ whitenoise = "^6.7.0"
 gunicorn = "^23.0.0"
 flake8 = "^7.1.1"
 uvicorn = "^0.31.0"
+django-bootstrap5 = "^24.3"
 
 
 [build-system]
