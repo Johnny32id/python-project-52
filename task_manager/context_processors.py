@@ -24,6 +24,12 @@ def navbar(request):
     }]
     if request.user.is_authenticated:
         navbar_items.append({
+            'label': _('Статусы'),
+            'url': '/statuses/',
+            'class': 'nav-link',
+            'align': ''
+        })
+        navbar_items.append({
             'label': _('Приветствую') + ', ' + user.username,
             'class': 'nav-link',
             'align': 'ms-auto'
