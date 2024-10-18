@@ -6,7 +6,7 @@ set -o errexit
 make install
 
 # Convert static asset files
-make convert
+make collectstatic
 
 # Apply any outstanding database migrations
 make migrate
