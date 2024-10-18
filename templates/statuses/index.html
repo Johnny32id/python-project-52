@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load i18n django_bootstrap5 %}
+
+{% block content %}
+
+  <h1 class="my-4">{% trans 'Статусы' %}</h1>
+  {%  trans 'Создать статус' as button_value %}
+  {% bootstrap_button button_value button_class="btn-primary mb-3" type="link" href="create" %}
+  <div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>{% trans 'ID' %}</th>
+      <th>{% trans 'Имя' %}</th>
+      <th>{% trans 'Дата создания' %}</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if statuses %}
+      {% for status in statuses %}
+        <tr>
+          <td>{{ status.id }}</td>
+          <td>{{ status.name }}</td>
+          <td>{{ status.created_at }}</td>
+          <td>
+            <a href="{% url 'statuses_update' status.id %}">{% trans 'Изменить' %}</a>
+            <br>
+            <a href="{% url 'statuses_delete' status.id %}">{% trans 'Удалить' %}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    {% endif %}
+
+    </tbody>
+  </table>
+  </div>
+  
+
+{% endblock %}
