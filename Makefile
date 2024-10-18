@@ -4,7 +4,8 @@ install:
 	poetry install --no-root
 
 migrate:
-	$(MANAGE) makemigrations migrate
+	$(MANAGE) makemigrations
+	$(MANAGE) migrate
 
 collectstatic:
 	$(MANAGE) collectstatic --no-input
