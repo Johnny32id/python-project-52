@@ -1,15 +1,28 @@
+MANAGE := poetry run python manage.py
+
 install:
-	poetry install
+	poetry install --no-root
+
+makemigrations:
+	$(MANAGE) makemigrations
 
 migrate:
-	poetry run python manage.py makemigrations
-	poetry run python manage.py migrate
+	$(MANAGE) migrate
+
+collectstatic:
+	$(MANAGE) collectstatic --no-input
+
+build: install collectstatic migrate
 
 dev:
-	poetry run python manage.py runserver
+	$(MANAGE) runserver localhost:8030
 
+create_superuser:
+	$(MANAGE) createsuperuser
+
+PORT ?= 8000
 start:
-	poetry run python -m gunicorn task_manager.asgi:application -k uvicorn.workers.UvicornWorker
+	poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) task_manager.asgi:application -k uvicorn.workers.UvicornWorker
 
 lint:
-	poetry run flake8 task_manager
+	poetry run flake8 task_manager --exclude=*migrations/
