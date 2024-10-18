@@ -15,9 +15,6 @@ class IndexView(TemplateView):
     template_name = 'users/index.html'
 
     def get_context_data(self, **kwargs):
-        """
-        Передача контекста в шаблон с пользователями.
-        """
         context = super().get_context_data(**kwargs)
         context['users'] = get_user_model().objects.all()
         return context
@@ -54,12 +51,6 @@ class UserDeleteView(AuthAndProfileOwnershipMixin,
     success_message = _('Пользователь успешно удалён')
 
     def dispatch(self, request, *args, **kwargs):
-        """
-        Ограничение удаления пользователя, связанного с задачей.
-
-        Перехватывает исключение ProtectedError, перенаправляет на страницу с
-        пользователями и выдает сообщение об ошибке.
-        """
         try:
             return super().dispatch(request, *args, **kwargs)
         except ProtectedError:
