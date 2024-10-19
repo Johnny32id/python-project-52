@@ -47,13 +47,13 @@ class CustomIndexView(CustomLoginRequiredMixin, TemplateView):
 
 class CustomCreateView(CustomLoginRequiredMixin, SuccessMessageFormContextMixin,
                        CreateView):
-    action = _('Create')
+    action = _('Создать')
     login_url = LOGIN_URL
 
 
 class CustomUpdateView(CustomLoginRequiredMixin, SuccessMessageFormContextMixin,
                        UpdateView):
-    action = _('Change')
+    action = _('Изменить')
     login_url = LOGIN_URL
 
     def get_redirect_url(self):
