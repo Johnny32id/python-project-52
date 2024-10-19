@@ -37,7 +37,7 @@ class UserUpdateView(AuthAndProfileOwnershipMixin,
     template_name = 'users/update.html'
     form_class = UserForm
     success_url = reverse_lazy('users_index')
-    success_message = _('User successfully updated')
+    success_message = _('Пользователь успешно изменён')
     title = _('Изменить пользователя')
     action = _('Изменить')
 

@@ -188,11 +188,3 @@ LOGGING = {
         }
     }
 }
-
-if not DEBUG:
-    CSRF_COOKIE_SECURE = False
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_SSL_REDIRECT = os.environ.get('GITHUB_ACTIONS') != 'true'
-    SECURE_HSTS_PRELOAD = True
-    SESSION_COOKIE_SECURE = True
