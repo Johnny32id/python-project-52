@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_bootstrap5',
     'task_manager',
-    'task_manager.users.apps.UsersConfig',
-    'task_manager.statuses.apps.StatusesConfig',
+    'task_manager.users',
+    'task_manager.statuses',
 ]
 
 MIDDLEWARE = [
@@ -96,7 +96,7 @@ if os.getenv('DATABASE_URL'):
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        # 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', # noqa
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', # noqa
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -105,10 +105,10 @@ AUTH_PASSWORD_VALIDATORS = [
         },
     },
     {
-        # 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        # 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
