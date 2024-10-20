@@ -83,11 +83,9 @@ class StatusesCreateViewTest(BaseTestCase):
         }
         self.assertEqual(Status.objects.count(), 0)
         self.client.post(reverse('statuses_create'), data)
-        # Создаем еще один статус с тем же именем
         response = self.client.post(reverse('statuses_create'), data)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'statuses/create.html')
-        # self.assertContains(response, _('Status with this Name already exists.'))
         self.assertEqual(Status.objects.count(), 1)
 
 
@@ -139,7 +137,6 @@ class StatusesUpdateViewTest(BaseTestCase):
         self.assertRedirects(response, reverse('statuses_index'))
         self.assertEqual(Status.objects.count(), 2)
 
-        # Обновляем первый статус и пытаемся изменить имя на имя второго статуса
         status1 = Status.objects.first()
         data = {
             'name': 'Test status new'
@@ -148,7 +145,6 @@ class StatusesUpdateViewTest(BaseTestCase):
             reverse('statuses_update', kwargs={'pk': status1.pk}), data)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'statuses/update.html')
-        # self.assertContains(response, _('Status with this Name already exists.'))
         self.assertEqual(Status.objects.count(), 2)
         self.assertEqual(Status.objects.first().name, 'Test status')
 
