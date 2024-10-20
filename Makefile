@@ -1,3 +1,5 @@
+.PHONY: install makemigrations migrate convert build dev makemessages compilemessages start selfcheck lint test test-coverage check 
+
 MANAGE := poetry run python manage.py
 
 install:
@@ -15,14 +17,26 @@ build: install collectstatic migrate
 dev:
 	$(MANAGE) runserver localhost:8030
 
+makemessages:
+	$(MANAGE) makemessages -l ru
+
+compilemessages:
+	$(MANAGE) compilemessages --ignore=.venv
+
 create_superuser:
 	$(MANAGE) createsuperuser
 
+PORT ?= 8000
 start:
 	poetry run python -m gunicorn task_manager.asgi:application -k uvicorn.workers.UvicornWorker
+
+selfcheck:
+	poetry check
 
 lint:
 	poetry run flake8 task_manager --exclude=*migrations/
 
 test:
 	poetry run pytest task_manager
+
+check: selfcheck lint test
