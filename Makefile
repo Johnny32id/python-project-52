@@ -5,8 +5,10 @@ MANAGE := poetry run python manage.py
 install:
 	poetry install --no-root
 
-migrate:
+makemigrations:
 	$(MANAGE) makemigrations
+
+migrate:
 	$(MANAGE) migrate
 
 collectstatic:
