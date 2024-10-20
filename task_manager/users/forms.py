@@ -22,7 +22,7 @@ class UserForm(UserCreationForm):
 
     def clean_username(self):
         username = self.cleaned_data['username']
-        error_message = _('Пользователь с таким именем уже существует.')
+        error_message = _('A user with that username already exists.')
         if get_user_model().objects.filter(username=username).exclude(
                 id=self.instance.id).exists():
             raise forms.ValidationError(error_message)
