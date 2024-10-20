@@ -15,7 +15,7 @@ class Status(models.Model):
 
     def delete(self, *args, **kwargs):
         if self.task_set.exists():
-            raise ProtectedError("Невозможно удалить статус, потому что он используется",
+            raise ProtectedError("Cannot delete status because it is in use",
                                  self.task_set.all())
 
         super().delete(*args, **kwargs)

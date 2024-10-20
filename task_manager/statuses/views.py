@@ -12,14 +12,10 @@ from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
 
 
-# class IndexView(CustomLoginRequiredMixin, TemplateView):
 class IndexView(CustomIndexView):
     template_name = 'statuses/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['statuses'] = Status.objects.all()
-        return context
+    model = Status
+    context_object_name = 'statuses'
 
 
 class StatusCreateView(CustomCreateView):
@@ -27,8 +23,7 @@ class StatusCreateView(CustomCreateView):
     form_class = StatusForm
     model = Status
     success_url = reverse_lazy('statuses_index')
-    success_message = _('Статус успешно создан')
-    title = _('Создать статус')
+    success_message = _('Status successfully created')
 
 
 class StatusUpdateView(CustomUpdateView):
@@ -36,17 +31,15 @@ class StatusUpdateView(CustomUpdateView):
     form_class = StatusForm
     model = Status
     success_url = reverse_lazy('statuses_index')
-    success_message = _('Статус успешно изменён')
-    title = _('Изменить статус')
+    success_message = _('Status successfully updated')
 
 
 class StatusDeleteView(CustomDeleteView):
     template_name = 'statuses/delete.html'
     model = Status
     success_url = reverse_lazy('statuses_index')
-    success_message = _('Статус успешно удалён')
-    error_message = _('Невозможно удалить статус, потому что он используется')
-    title = _('Удалить статус')
+    success_message = _('Status successfully deleted')
+    error_message = _('Cannot delete status because it is in use')
 
     def post(self, request, *args, **kwargs):
         try:
