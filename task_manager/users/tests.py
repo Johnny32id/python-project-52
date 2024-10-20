@@ -136,15 +136,11 @@ class ChangeOtherUserProfileTest(TestCase):
     def test_authorized_user_cannot_change_other_user_profile(self):
         self.client.force_login(self.user1)
         self.assertEqual(User.objects.count(), 2)
-
-        # пробуем изменить профиль пользователя user2
         response = self.client.post(
             reverse('users_update', kwargs={'pk': self.user2.pk}),
             data={'username': 'Buzz', 'first_name': 'Bar'})
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('users_index'))
-
-        # пробуем удалить профиль пользователя user2
         response = self.client.post(
             reverse('users_delete', kwargs={'pk': self.user2.pk}))
         self.assertEqual(response.status_code, 302)
