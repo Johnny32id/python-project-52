@@ -1,5 +1,3 @@
-.PHONY: install makemigrations migrate convert build dev makemessages compilemessages start selfcheck lint test check 
-
 MANAGE := poetry run python manage.py
 
 install:
@@ -28,8 +26,10 @@ compilemessages:
 create_superuser:
 	$(MANAGE) createsuperuser
 
+PORT ?= 8000
+APP_HOST ?= $(RENDER_EXTERNAL_HOSTNAME:-0.0.0.0)
 start:
-	poetry run python -m gunicorn task_manager.asgi:application -k uvicorn.workers.UvicornWorker
+	poetry run gunicorn -w 5 -b $(APP_HOST):$(PORT) task_manager.asgi:application -k uvicorn.workers.UvicornWorker
 
 selfcheck:
 	poetry check
