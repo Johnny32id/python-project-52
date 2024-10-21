@@ -10,20 +10,23 @@ def navbar(request):
         'align': ''
     }]
     if request.user.is_authenticated:
-        # Add the links to the users, statuses, labels, and tasks pages
         navbar_items.append({
             'label': _('Statuses'),
             'url': '/statuses/',
             'class': 'nav-link',
             'align': ''
         })
-        # Add the link to the user's profile
+        navbar_items.append({
+            'label': _('Tasks'),
+            'url': '/tasks/',
+            'class': 'nav-link',
+            'align': ''
+        })
         navbar_items.append({
             'label': _('Wellcome') + ', ' + user.username,
             'class': 'nav-link',
             'align': 'ms-auto'
         })
-        # Add the logout button
         navbar_items.append({
             'label': _('Logout'),
             'url': '/logout/',
@@ -32,7 +35,6 @@ def navbar(request):
             'align': ''
         })
     else:
-        # Add the links to the login and registration pages
         navbar_items.append({
             'label': _('Login'),
             'url': '/login/',

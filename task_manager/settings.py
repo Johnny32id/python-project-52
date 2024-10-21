@@ -24,7 +24,6 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-SECURE_SSL_REDIRECT = False
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'task_manager',
     'task_manager.users.apps.UsersConfig',
     'task_manager.statuses.apps.StatusesConfig',
+    'task_manager.tasks.apps.TasksConfig',
 ]
 
 MIDDLEWARE = [
@@ -191,3 +191,11 @@ LOGGING = {
         }
     }
 }
+
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_SSL_REDIRECT = os.environ.get('GITHUB_ACTIONS') != 'true'
+    SECURE_HSTS_PRELOAD = True
+    SESSION_COOKIE_SECURE = True
