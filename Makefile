@@ -1,4 +1,4 @@
-.PHONY: install makemigrations migrate convert build dev makemessages compilemessages start selfcheck lint test test-coverage check 
+.PHONY: install makemigrations migrate convert build dev makemessages compilemessages start selfcheck lint test check 
 
 MANAGE := poetry run python manage.py
 
@@ -28,7 +28,6 @@ compilemessages:
 create_superuser:
 	$(MANAGE) createsuperuser
 
-PORT ?= 8000
 start:
 	poetry run python -m gunicorn task_manager.asgi:application -k uvicorn.workers.UvicornWorker
 
