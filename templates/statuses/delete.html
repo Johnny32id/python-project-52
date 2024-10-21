@@ -4,12 +4,12 @@
 
 {% block content %}
 
-  <h1 class="my-4">{{ title }}</h1>
-  <p>{% trans "Вы уверены, что хотите удалить" %} {{ status.name }}?</p>
+  <h1 class="my-4">{% trans 'Deleting a status' %}</h1>
+  <p>{% trans "Are you sure you want to delete" %} {{ status.name }}?</p>
   
   <form method="post">
     {% csrf_token %}
-    {% trans 'Да, удалить' as button_value %}
+    {% trans 'Yes, delete' as button_value %}
     {% bootstrap_button button_value button_class="btn btn-danger" %}
   </form>
 
