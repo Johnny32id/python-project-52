@@ -195,8 +195,7 @@ LOGGING = {
         }
     }
 }
-
-CSRF_TRUSTED_ORIGINS = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+CSRF_TRUSTED_ORIGINS = 'https://python-project-52-u1nd.onrender.com/'
 
 ROLLBAR = {
     'access_token': os.getenv('ROLLBAR_TOKEN'),
