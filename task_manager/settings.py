@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'task_manager.users.apps.UsersConfig',
     'task_manager.statuses.apps.StatusesConfig',
     'task_manager.tasks.apps.TasksConfig',
+    'task_manager.labels.apps.LabelsConfig',
     'django_filters',
 ]
 
@@ -52,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware'
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
