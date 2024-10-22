@@ -16,6 +16,7 @@ uvicorn = "^0.31.0"
 django-bootstrap5 = "^24.3"
 whitenoise = {extras = ["brotli"], version = "^6.7.0"}
 django-filter = "^24.3"
+rollbar = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
