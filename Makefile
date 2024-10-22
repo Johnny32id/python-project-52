@@ -26,8 +26,9 @@ compilemessages:
 create_superuser:
 	$(MANAGE) createsuperuser
 
+PORT ?= 8000
 start:
-	poetry run python -m gunicorn task_manager.asgi:application -k uvicorn.workers.UvicornWorker
+	poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) task_manager.asgi:application -k uvicorn.workers.UvicornWorker
 
 selfcheck:
 	poetry check

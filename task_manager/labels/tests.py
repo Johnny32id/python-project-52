@@ -84,11 +84,9 @@ class LabelsCreateViewTest(BaseTestCase):
         }
         self.assertEqual(Label.objects.count(), 0)
         self.client.post(reverse('labels_create'), data)
-        # Создаем еще один статус с тем же именем
         response = self.client.post(reverse('labels_create'), data)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'labels/create.html')
-        # self.assertContains(response, _('Label with this Name already exists.'))
         self.assertEqual(Label.objects.count(), 1)
 
 
@@ -125,7 +123,6 @@ class LabelsUpdateViewTest(BaseTestCase):
             reverse('labels_update', kwargs={'pk': self.label.pk}), data)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'labels/update.html')
-        # self.assertContains(response, _('This field is required.'))
         self.assertEqual(Label.objects.count(), 1)
         label = Label.objects.first()
         self.assertEqual(label.name, 'Test label')
@@ -140,7 +137,6 @@ class LabelsUpdateViewTest(BaseTestCase):
         self.assertRedirects(response, reverse('labels_index'))
         self.assertEqual(Label.objects.count(), 2)
 
-        # Обновляем первую метку и пытаемся изменить имя на имя вторй метки
         label1 = Label.objects.first()
         data = {
             'name': 'Test label new'
@@ -149,7 +145,6 @@ class LabelsUpdateViewTest(BaseTestCase):
             reverse('labels_update', kwargs={'pk': label1.pk}), data)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'labels/update.html')
-        # self.assertContains(response, _('Label with this Name already exists.'))
         self.assertEqual(Label.objects.count(), 2)
         self.assertEqual(Label.objects.first().name, 'Test label')
 

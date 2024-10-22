@@ -53,8 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    # default rollbar'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
-    'task_manager.rollbar_middleware.CustomRollbarNotifierMiddleware',
+    # default rollbar 'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+    "task_manager.rollbar_middleware.CustomRollbarNotifierMiddleware",
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -195,7 +195,6 @@ LOGGING = {
         }
     }
 }
-CSRF_TRUSTED_ORIGINS = ['https://python-project-52-u1nd.onrender.com/']
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
@@ -206,7 +205,7 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
 
 ROLLBAR = {
-    'access_token': os.getenv('ROLLBAR_TOKEN'),
+    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
     'root': BASE_DIR,
