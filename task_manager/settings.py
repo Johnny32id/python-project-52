@@ -196,6 +196,8 @@ LOGGING = {
     }
 }
 
+CSRF_TRUSTED_ORIGINS = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
 ROLLBAR = {
     'access_token': os.getenv('ROLLBAR_TOKEN'),
     'environment': 'development' if DEBUG else 'production',
