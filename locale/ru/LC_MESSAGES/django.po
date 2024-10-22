@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-21 10:10+0300\n"
+"POT-Creation-Date: 2024-10-22 07:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,28 +19,60 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
-#: task_manager/context_processors.py:7
+
+#: task_manager/context_processors.py:7 templates/users/index.html:7
 msgid "Users"
 msgstr ""
 
-#: task_manager/context_processors.py:15
+#: task_manager/context_processors.py:14 templates/statuses/index.html:7
 msgid "Statuses"
 msgstr ""
 
-#: task_manager/context_processors.py:22
+#: task_manager/context_processors.py:20 templates/tasks/index.html:7
+msgid "Tasks"
+msgstr ""
+
+#: task_manager/context_processors.py:26
 msgid "Wellcome"
 msgstr ""
 
-#: task_manager/context_processors.py:28
+#: task_manager/context_processors.py:31
 msgid "Logout"
 msgstr ""
 
-#: task_manager/context_processors.py:37
+#: task_manager/context_processors.py:39 templates/login.html:6
 msgid "Login"
 msgstr ""
 
-#: task_manager/context_processors.py:43
+#: task_manager/context_processors.py:45 templates/users/create.html:7
 msgid "Registration"
+msgstr ""
+
+#: task_manager/labels/models.py:7 task_manager/statuses/models.py:7
+#: task_manager/tasks/models.py:6 templates/labels/index.html:15
+#: templates/statuses/index.html:15 templates/tasks/index.html:26
+msgid "Name"
+msgstr ""
+
+#: task_manager/labels/tests.py:78 task_manager/statuses/tests.py:77
+#: task_manager/statuses/tests.py:125
+msgid "This field is required."
+msgstr ""
+
+#: task_manager/labels/views.py:26
+msgid "Label successfully created"
+msgstr ""
+
+#: task_manager/labels/views.py:34
+msgid "Label successfully updated"
+msgstr ""
+
+#: task_manager/labels/views.py:41
+msgid "Label successfully deleted"
+msgstr ""
+
+#: task_manager/labels/views.py:42
+msgid "Cannot delete label because it is in use"
 msgstr ""
 
 #: task_manager/mixins.py:21
@@ -49,14 +81,6 @@ msgstr ""
 
 #: task_manager/mixins.py:24
 msgid "You don't have permission to change other user"
-msgstr ""
-
-#: task_manager/statuses/models.py:7
-msgid "Name"
-msgstr ""
-
-#: task_manager/statuses/tests.py:77 task_manager/statuses/tests.py:125
-msgid "This field is required."
 msgstr ""
 
 #: task_manager/statuses/views.py:26
@@ -73,6 +97,54 @@ msgstr ""
 
 #: task_manager/statuses/views.py:42
 msgid "Cannot delete status because it is in use"
+msgstr ""
+
+#: task_manager/tasks/forms.py:26
+msgid "Label"
+msgstr ""
+
+#: task_manager/tasks/forms.py:28
+msgid "Only your tasks"
+msgstr ""
+
+#: task_manager/tasks/models.py:7
+msgid "Description"
+msgstr ""
+
+#: task_manager/tasks/models.py:11 templates/tasks/detail.html:29
+#: templates/tasks/index.html:27
+msgid "Status"
+msgstr ""
+
+#: task_manager/tasks/models.py:14 templates/tasks/detail.html:19
+#: templates/tasks/index.html:28
+msgid "Author"
+msgstr ""
+
+#: task_manager/tasks/models.py:18 templates/tasks/detail.html:24
+#: templates/tasks/index.html:29
+msgid "Executor"
+msgstr ""
+
+#: task_manager/tasks/models.py:23 templates/labels/index.html:7
+#: templates/tasks/detail.html:40
+msgid "Labels"
+msgstr ""
+
+#: task_manager/tasks/views.py:28
+msgid "Task successfully created"
+msgstr ""
+
+#: task_manager/tasks/views.py:49
+msgid "Task successfully updated"
+msgstr ""
+
+#: task_manager/tasks/views.py:56
+msgid "Task successfully deleted"
+msgstr ""
+
+#: task_manager/tasks/views.py:64
+msgid "Only the author can delete the task"
 msgstr ""
 
 #: task_manager/users/forms.py:25
@@ -104,11 +176,11 @@ msgid "You are logged out"
 msgstr ""
 
 #: templates/base.html:14 templates/base.html:15
-msgid "Менеджер задач Hexlet"
+msgid "Task manager Hexlet"
 msgstr ""
 
 #: templates/base.html:25
-msgid "Менеджер задач"
+msgid "Task manager"
 msgstr ""
 
 #: templates/base.html:69
@@ -138,73 +210,124 @@ msgid "The server encountered an error. Please try again later."
 msgstr ""
 
 #: templates/index.html:12
-msgid "Привет от Хекслета!"
+msgid "Hello from Hexlet!"
 msgstr ""
 
 #: templates/index.html:13
-msgid "Практические курсы по программированию"
+msgid "Practical programming courses"
 msgstr ""
 
 #: templates/index.html:16
-msgid "Узнать больше"
+msgid "Learn more"
 msgstr ""
 
-#: templates/login.html:6 templates/login.html:10
-msgid "Вход"
+#: templates/labels/create.html:7 templates/labels/index.html:8
+msgid "Create label"
 msgstr ""
 
-#: templates/statuses/delete.html:8
-msgid "Вы уверены, что хотите удалить"
+#: templates/labels/create.html:9 templates/statuses/create.html:9
+#: templates/tasks/create.html:9
+msgid "Create"
 msgstr ""
 
-#: templates/statuses/delete.html:12 templates/users/delete.html:12
-msgid "Да, удалить"
+#: templates/labels/delete.html:7
+msgid "Deleting a label"
 msgstr ""
 
-#: templates/statuses/index.html:7
-msgid "Статусы"
+#: templates/labels/delete.html:8 templates/statuses/delete.html:8
+#: templates/tasks/delete.html:8 templates/users/delete.html:8
+msgid "Are you sure you want to delete"
 msgstr ""
 
-#: templates/statuses/index.html:8
-msgid "Создать статус"
+#: templates/labels/delete.html:12 templates/statuses/delete.html:12
+#: templates/tasks/delete.html:12 templates/users/delete.html:12
+msgid "Yes, delete"
 msgstr ""
 
-#: templates/statuses/index.html:14 templates/users/index.html:12
+#: templates/labels/index.html:14 templates/statuses/index.html:14
+#: templates/tasks/index.html:25 templates/users/index.html:12
 msgid "ID"
 msgstr ""
 
-#: templates/statuses/index.html:15
-msgid "Имя"
+#: templates/labels/index.html:16 templates/statuses/index.html:16
+#: templates/tasks/detail.html:34 templates/tasks/index.html:30
+#: templates/users/index.html:15
+msgid "Created at"
 msgstr ""
 
-#: templates/statuses/index.html:16 templates/users/index.html:15
-msgid "Дата создания"
+#: templates/labels/index.html:28 templates/labels/update.html:9
+#: templates/statuses/index.html:28 templates/tasks/detail.html:51
+#: templates/tasks/index.html:45 templates/users/index.html:28
+msgid "Update"
 msgstr ""
 
-#: templates/statuses/index.html:28 templates/users/index.html:28
-msgid "Изменить"
+#: templates/labels/index.html:30 templates/statuses/index.html:30
+#: templates/tasks/detail.html:53 templates/tasks/index.html:47
+#: templates/users/index.html:30
+msgid "Delete"
 msgstr ""
 
-#: templates/statuses/index.html:30 templates/users/index.html:30
-msgid "Удалить"
+#: templates/labels/update.html:7
+msgid "Change label"
+msgstr ""
+
+#: templates/login.html:10
+msgid "Sign in"
+msgstr ""
+
+#: templates/statuses/create.html:7 templates/statuses/index.html:8
+msgid "Create status"
+msgstr ""
+
+#: templates/statuses/delete.html:7
+msgid "Deleting a status"
+msgstr ""
+
+#: templates/statuses/update.html:7
+msgid "Change status"
+msgstr ""
+
+#: templates/statuses/update.html:9 templates/tasks/update.html:9
+#: templates/users/update.html:9
+msgid "Change"
+msgstr ""
+
+#: templates/tasks/create.html:7 templates/tasks/index.html:8
+msgid "Create task"
+msgstr ""
+
+#: templates/tasks/delete.html:7
+msgid "Deleting a task"
+msgstr ""
+
+#: templates/tasks/detail.html:7
+msgid "View a task"
+msgstr ""
+
+#: templates/tasks/index.html:15
+msgid "Show"
+msgstr ""
+
+#: templates/tasks/update.html:7
+msgid "Change task"
+msgstr ""
+
+#: templates/users/create.html:9
+msgid "Register"
 msgstr ""
 
 #: templates/users/delete.html:7
-msgid "Удаление пользователя"
-msgstr ""
-
-#: templates/users/delete.html:8
-msgid "Вы уверены, что хотите удалить пользователя?"
-msgstr ""
-
-#: templates/users/index.html:7
-msgid "Пользователи"
+msgid "Deleting a user"
 msgstr ""
 
 #: templates/users/index.html:13
-msgid "Имя пользователя"
+msgid "Username"
 msgstr ""
 
 #: templates/users/index.html:14
-msgid "Полное имя"
+msgid "Full name"
+msgstr ""
+
+#: templates/users/update.html:7
+msgid "Change user"
 msgstr ""
