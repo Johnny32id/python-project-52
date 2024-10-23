@@ -1,6 +1,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Johnny32id/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Johnny32id/python-project-52/actions)
 [![Actions Status](https://github.com/Johnny32id/python-project-52/actions/workflows/django.yml/badge.svg)](https://github.com/Johnny32id/python-project-52/actions)
+### Try task manager
+(https://python-project-52-u1nd.onrender.com)
 
 ### Features
 
