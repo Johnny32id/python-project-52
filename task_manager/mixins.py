@@ -3,7 +3,6 @@ from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import (ListView,
                                   CreateView,
@@ -11,10 +10,8 @@ from django.views.generic import (ListView,
                                   DeleteView,
                                   DetailView)
 
-LOGIN_URL = reverse_lazy('login')
 
-
-class AuthAndProfileOwnershipMixin(UserPassesTestMixin):
+class AuthAndProfileOwnershipMixin(UserPassesTestMixin, LoginRequiredMixin):
 
     def handle_no_permission(self):
         if not self.request.user.is_authenticated:
@@ -29,13 +26,6 @@ class AuthAndProfileOwnershipMixin(UserPassesTestMixin):
         return self.request.user.pk == user_id
 
 
-class CustomLoginRequiredMixin(LoginRequiredMixin):
-    login_url = LOGIN_URL
-
-    def handle_no_permission(self):
-        return redirect(self.login_url)
-
-
 class ProtectedErrorHandlerMixin:
     protected_error_message = None
     redirect_url = None
@@ -48,32 +38,32 @@ class ProtectedErrorHandlerMixin:
             return redirect(self.redirect_url)
 
 
-class CustomIndexView(CustomLoginRequiredMixin,
+class CustomIndexView(LoginRequiredMixin,
                       ListView):
     pass
 
 
-class CustomCreateView(CustomLoginRequiredMixin,
+class CustomCreateView(LoginRequiredMixin,
                        SuccessMessageMixin,
                        CreateView):
     pass
 
 
-class CustomUpdateView(CustomLoginRequiredMixin,
+class CustomUpdateView(LoginRequiredMixin,
                        SuccessMessageMixin,
                        UpdateView):
     def get_redirect_url(self):
         return self.login_url
 
 
-class CustomDeleteView(CustomLoginRequiredMixin,
+class CustomDeleteView(LoginRequiredMixin,
                        SuccessMessageMixin,
                        DeleteView):
     pass
 
 
 class CustomDetailView(ProtectedErrorHandlerMixin,
-                       CustomLoginRequiredMixin,
+                       LoginRequiredMixin,
                        SuccessMessageMixin,
                        DetailView):
     pass
