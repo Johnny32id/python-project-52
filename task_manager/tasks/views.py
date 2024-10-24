@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django_filters.views import FilterView
 
-from task_manager.views import (BaseIndexView,
+from task_manager.views import (BaseListView,
                                 BaseCreateView,
                                 BaseUpdateView,
                                 BaseDetailView,
@@ -13,7 +13,7 @@ from task_manager.tasks.forms import TaskForm, TaskFilterForm
 from task_manager.tasks.models import Task
 
 
-class IndexView(FilterView, BaseIndexView):
+class IndexView(FilterView, BaseListView):
     template_name = 'tasks/index.html'
     model = Task
     filterset_class = TaskFilterForm

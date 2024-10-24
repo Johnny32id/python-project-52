@@ -30,8 +30,8 @@ class LogoutUserView(LogoutView):
         return redirect('index')
 
 
-class BaseIndexView(LoginRequiredMixin,
-                    ListView):
+class BaseListView(LoginRequiredMixin,
+                   ListView):
     pass
 
 
