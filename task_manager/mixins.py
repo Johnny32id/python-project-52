@@ -1,14 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import (ListView,
-                                  CreateView,
-                                  UpdateView,
-                                  DeleteView,
-                                  DetailView)
 
 
 class AuthAndProfileOwnershipMixin(UserPassesTestMixin, LoginRequiredMixin):
@@ -36,34 +30,3 @@ class ProtectedErrorHandlerMixin:
         except ProtectedError:
             messages.error(request, self.protected_error_message)
             return redirect(self.redirect_url)
-
-
-class CustomIndexView(LoginRequiredMixin,
-                      ListView):
-    pass
-
-
-class CustomCreateView(LoginRequiredMixin,
-                       SuccessMessageMixin,
-                       CreateView):
-    pass
-
-
-class CustomUpdateView(LoginRequiredMixin,
-                       SuccessMessageMixin,
-                       UpdateView):
-    def get_redirect_url(self):
-        return self.login_url
-
-
-class CustomDeleteView(LoginRequiredMixin,
-                       SuccessMessageMixin,
-                       DeleteView):
-    pass
-
-
-class CustomDetailView(ProtectedErrorHandlerMixin,
-                       LoginRequiredMixin,
-                       SuccessMessageMixin,
-                       DetailView):
-    pass
