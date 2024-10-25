@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -20,7 +19,7 @@ class IndexView(BaseListView):
     context_object_name = 'users'
 
 
-class UserCreateView(SuccessMessageMixin, BaseCreateView):
+class UserCreateView(BaseCreateView):
     template_name = 'users/create.html'
     model = User
     form_class = UserForm
@@ -29,7 +28,6 @@ class UserCreateView(SuccessMessageMixin, BaseCreateView):
 
 
 class UserUpdateView(AuthAndProfileOwnershipMixin,
-                     SuccessMessageMixin,
                      BaseUpdateView):
     template_name = 'users/update.html'
     model = User
@@ -39,7 +37,6 @@ class UserUpdateView(AuthAndProfileOwnershipMixin,
 
 
 class UserDeleteView(AuthAndProfileOwnershipMixin,
-                     SuccessMessageMixin,
                      BaseDeleteView):
     template_name = 'users/delete.html'
     model = User
