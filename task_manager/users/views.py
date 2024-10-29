@@ -1,25 +1,23 @@
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from task_manager.views import (BaseListView,
-                                BaseCreateView,
-                                BaseUpdateView,
-                                BaseDeleteView)
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from task_manager.mixins import AuthAndProfileOwnershipMixin
 from task_manager.users.forms import UserForm
 from task_manager.users.models import User
 
 
-class IndexView(BaseListView):
+class IndexView(ListView):
     template_name = 'users/index.html'
     model = User
     context_object_name = 'users'
 
 
-class UserCreateView(BaseCreateView):
+class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'users/create.html'
     model = User
     form_class = UserForm
@@ -28,7 +26,8 @@ class UserCreateView(BaseCreateView):
 
 
 class UserUpdateView(AuthAndProfileOwnershipMixin,
-                     BaseUpdateView):
+                     SuccessMessageMixin,
+                     UpdateView):
     template_name = 'users/update.html'
     model = User
     form_class = UserForm
@@ -37,7 +36,8 @@ class UserUpdateView(AuthAndProfileOwnershipMixin,
 
 
 class UserDeleteView(AuthAndProfileOwnershipMixin,
-                     BaseDeleteView):
+                     SuccessMessageMixin,
+                     DeleteView):
     template_name = 'users/delete.html'
     model = User
     success_url = reverse_lazy('users_index')

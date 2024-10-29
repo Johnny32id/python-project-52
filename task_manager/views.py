@@ -1,11 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
-from task_manager.mixins import ProtectedErrorHandlerMixin
+from task_manager.mixins import BaseLoginRequiredMixin, ProtectedErrorHandlerMixin
 from django.views.generic import (ListView,
                                   CreateView,
                                   UpdateView,
@@ -30,32 +29,31 @@ class LogoutUserView(LogoutView):
         return redirect('index')
 
 
-class BaseListView(LoginRequiredMixin,
+class BaseListView(BaseLoginRequiredMixin,
                    ListView):
     pass
 
 
-class BaseCreateView(LoginRequiredMixin,
+class BaseCreateView(BaseLoginRequiredMixin,
                      SuccessMessageMixin,
                      CreateView):
     pass
 
 
-class BaseUpdateView(LoginRequiredMixin,
+class BaseUpdateView(BaseLoginRequiredMixin,
                      SuccessMessageMixin,
                      UpdateView):
-    def get_redirect_url(self):
-        return self.login_url
+    pass
 
 
-class BaseDeleteView(LoginRequiredMixin,
+class BaseDeleteView(BaseLoginRequiredMixin,
                      SuccessMessageMixin,
                      DeleteView):
     pass
 
 
 class BaseDetailView(ProtectedErrorHandlerMixin,
-                     LoginRequiredMixin,
+                     BaseLoginRequiredMixin,
                      SuccessMessageMixin,
                      DetailView):
     pass

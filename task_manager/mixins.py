@@ -2,10 +2,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+LOGIN_URL = reverse_lazy('login')
 
-class AuthAndProfileOwnershipMixin(UserPassesTestMixin, LoginRequiredMixin):
+
+class AuthAndProfileOwnershipMixin(UserPassesTestMixin):
 
     def handle_no_permission(self):
         if not self.request.user.is_authenticated:
@@ -18,6 +21,13 @@ class AuthAndProfileOwnershipMixin(UserPassesTestMixin, LoginRequiredMixin):
     def test_func(self):
         user_id = self.kwargs.get('pk')
         return self.request.user.pk == user_id
+
+
+class BaseLoginRequiredMixin(LoginRequiredMixin):
+    login_url = LOGIN_URL
+
+    def handle_no_permission(self):
+        return redirect(self.login_url)
 
 
 class ProtectedErrorHandlerMixin:
