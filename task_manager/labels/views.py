@@ -6,19 +6,19 @@ from django.utils.translation import gettext_lazy as _
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
-from task_manager.mixins import (CustomIndexView,
-                                 CustomCreateView,
-                                 CustomUpdateView,
-                                 CustomDeleteView)
+from task_manager.views import (BaseIndexView,
+                                BaseCreateView,
+                                BaseUpdateView,
+                                BaseDeleteView)
 
 
-class IndexView(CustomIndexView):
+class IndexView(BaseIndexView):
     template_name = 'labels/index.html'
     model = Label
     context_object_name = 'labels'
 
 
-class LabelCreateView(CustomCreateView):
+class LabelCreateView(BaseCreateView):
     template_name = 'labels/create.html'
     form_class = LabelForm
     model = Label
@@ -26,7 +26,7 @@ class LabelCreateView(CustomCreateView):
     success_message = _('Label successfully created')
 
 
-class LabelUpdateView(CustomUpdateView):
+class LabelUpdateView(BaseUpdateView):
     template_name = 'labels/update.html'
     form_class = LabelForm
     model = Label
@@ -34,7 +34,7 @@ class LabelUpdateView(CustomUpdateView):
     success_message = _('Label successfully updated')
 
 
-class LabelDeleteView(CustomDeleteView):
+class LabelDeleteView(BaseDeleteView):
     template_name = 'labels/delete.html'
     model = Label
     success_url = reverse_lazy('labels_index')

@@ -4,23 +4,23 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django_filters.views import FilterView
 
-from task_manager.mixins import (CustomIndexView,
-                                 CustomCreateView,
-                                 CustomUpdateView,
-                                 CustomDetailView,
-                                 CustomDeleteView)
+from task_manager.views import (BaseIndexView,
+                                BaseCreateView,
+                                BaseUpdateView,
+                                BaseDetailView,
+                                BaseDeleteView)
 from task_manager.tasks.forms import TaskForm, TaskFilterForm
 from task_manager.tasks.models import Task
 
 
-class IndexView(FilterView, CustomIndexView):
+class IndexView(FilterView, BaseIndexView):
     template_name = 'tasks/index.html'
     model = Task
     filterset_class = TaskFilterForm
     context_object_name = 'tasks'
 
 
-class TaskCreateView(CustomCreateView):
+class TaskCreateView(BaseCreateView):
     template_name = 'tasks/create.html'
     model = Task
     form_class = TaskForm
@@ -33,7 +33,7 @@ class TaskCreateView(CustomCreateView):
         return response
 
 
-class TaskDetailView(CustomDetailView):
+class TaskDetailView(BaseDetailView):
     template_name = 'tasks/detail.html'
     model = Task
     pk_url_kwarg = 'pk'
@@ -41,7 +41,7 @@ class TaskDetailView(CustomDetailView):
     form_class = TaskForm
 
 
-class TaskUpdateView(CustomUpdateView):
+class TaskUpdateView(BaseUpdateView):
     template_name = 'tasks/update.html'
     form_class = TaskForm
     model = Task
@@ -49,7 +49,7 @@ class TaskUpdateView(CustomUpdateView):
     success_message = _('Task successfully updated')
 
 
-class TaskDeleteView(CustomDeleteView):
+class TaskDeleteView(BaseDeleteView):
     template_name = 'tasks/delete.html'
     model = Task
     success_url = reverse_lazy('tasks_index')

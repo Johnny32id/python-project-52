@@ -4,6 +4,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
+from task_manager.mixins import BaseLoginRequiredMixin, ProtectedErrorHandlerMixin
+from django.views.generic import (ListView,
+                                  CreateView,
+                                  UpdateView,
+                                  DeleteView,
+                                  DetailView)
 
 
 def index(request):
@@ -21,6 +27,36 @@ class LogoutUserView(LogoutView):
         logout(request)
         messages.info(request, _('You are logged out'))
         return redirect('index')
+
+
+class BaseIndexView(BaseLoginRequiredMixin,
+                    ListView):
+    pass
+
+
+class BaseCreateView(BaseLoginRequiredMixin,
+                     SuccessMessageMixin,
+                     CreateView):
+    pass
+
+
+class BaseUpdateView(BaseLoginRequiredMixin,
+                     SuccessMessageMixin,
+                     UpdateView):
+    pass
+
+
+class BaseDeleteView(BaseLoginRequiredMixin,
+                     SuccessMessageMixin,
+                     DeleteView):
+    pass
+
+
+class BaseDetailView(ProtectedErrorHandlerMixin,
+                     BaseLoginRequiredMixin,
+                     SuccessMessageMixin,
+                     DetailView):
+    pass
 
 
 def handler404(request, exception):

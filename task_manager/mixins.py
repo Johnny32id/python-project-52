@@ -1,15 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import (ListView,
-                                  CreateView,
-                                  UpdateView,
-                                  DeleteView,
-                                  DetailView)
 
 LOGIN_URL = reverse_lazy('login')
 
@@ -29,7 +23,7 @@ class AuthAndProfileOwnershipMixin(UserPassesTestMixin):
         return self.request.user.pk == user_id
 
 
-class CustomLoginRequiredMixin(LoginRequiredMixin):
+class BaseLoginRequiredMixin(LoginRequiredMixin):
     login_url = LOGIN_URL
 
     def handle_no_permission(self):
@@ -46,33 +40,3 @@ class ProtectedErrorHandlerMixin:
         except ProtectedError:
             messages.error(request, self.protected_error_message)
             return redirect(self.redirect_url)
-
-
-class CustomIndexView(CustomLoginRequiredMixin,
-                      ListView):
-    pass
-
-
-class CustomCreateView(CustomLoginRequiredMixin,
-                       SuccessMessageMixin,
-                       CreateView):
-    pass
-
-
-class CustomUpdateView(CustomLoginRequiredMixin,
-                       SuccessMessageMixin,
-                       UpdateView):
-    pass
-
-
-class CustomDeleteView(CustomLoginRequiredMixin,
-                       SuccessMessageMixin,
-                       DeleteView):
-    pass
-
-
-class CustomDetailView(ProtectedErrorHandlerMixin,
-                       CustomLoginRequiredMixin,
-                       SuccessMessageMixin,
-                       DetailView):
-    pass

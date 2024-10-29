@@ -4,21 +4,21 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from task_manager.mixins import (CustomIndexView,
-                                 CustomCreateView,
-                                 CustomUpdateView,
-                                 CustomDeleteView)
+from task_manager.views import (BaseIndexView,
+                                BaseCreateView,
+                                BaseUpdateView,
+                                BaseDeleteView)
 from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
 
 
-class IndexView(CustomIndexView):
+class IndexView(BaseIndexView):
     template_name = 'statuses/index.html'
     model = Status
     context_object_name = 'statuses'
 
 
-class StatusCreateView(CustomCreateView):
+class StatusCreateView(BaseCreateView):
     template_name = 'statuses/create.html'
     form_class = StatusForm
     model = Status
@@ -26,7 +26,7 @@ class StatusCreateView(CustomCreateView):
     success_message = _('Status successfully created')
 
 
-class StatusUpdateView(CustomUpdateView):
+class StatusUpdateView(BaseUpdateView):
     template_name = 'statuses/update.html'
     form_class = StatusForm
     model = Status
@@ -34,7 +34,7 @@ class StatusUpdateView(CustomUpdateView):
     success_message = _('Status successfully updated')
 
 
-class StatusDeleteView(CustomDeleteView):
+class StatusDeleteView(BaseDeleteView):
     template_name = 'statuses/delete.html'
     model = Status
     success_url = reverse_lazy('statuses_index')
