@@ -9,7 +9,8 @@ from task_manager.views import (BaseListView,
                                 BaseUpdateView,
                                 BaseDetailView,
                                 BaseDeleteView)
-from task_manager.tasks.forms import TaskForm, TaskFilterForm
+from task_manager.tasks.forms import TaskForm
+from task_manager.tasks.filters import TaskFilterForm
 from task_manager.tasks.models import Task
 
 
