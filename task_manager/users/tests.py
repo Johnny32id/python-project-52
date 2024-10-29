@@ -11,7 +11,7 @@ class BaseTestCase(TestCase):
             first_name='Test',
             last_name='User',
             username='testuser',
-            password='password123'
+            password='gdfgdbd123DDD'
         )
         self.client = Client()
         self.client.force_login(self.user)
@@ -35,8 +35,8 @@ class UserCreateViewTest(TestCase):
             'first_name': 'Test',
             'last_name': 'User',
             'username': 'testuser',
-            'password1': 'password123',
-            'password2': 'password123'
+            'password1': 'gdfgdbd123DDD',
+            'password2': 'gdfgdbd123DDD'
         }
         self.assertEqual(User.objects.count(), 0)
         response = self.client.post(reverse('users_create'), data)
@@ -49,8 +49,8 @@ class UserCreateViewTest(TestCase):
             'first_name': '',
             'last_name': '',
             'username': '',
-            'password1': 'password123',
-            'password2': 'password123'
+            'password1': 'gdfgdbd123DDD',
+            'password2': 'gdfgdbd123DDD'
         }
         response = self.client.post(reverse('users_create'), data)
         self.assertEqual(response.status_code, 200)
@@ -69,8 +69,8 @@ class UserUpdateViewTest(BaseTestCase):
             'first_name': 'New Test',
             'last_name': 'New User',
             'username': 'newtestuser',
-            'password1': 'newpassword123',
-            'password2': 'newpassword123'
+            'password1': 'gdfgdbd123DDD',
+            'password2': 'gdfgdbd123DDD'
         }
         response = self.client.post(
             reverse('users_update', args=[self.user.pk]),
@@ -89,8 +89,8 @@ class UserUpdateViewTest(BaseTestCase):
             'first_name': '',
             'last_name': '',
             'username': '',
-            'password1': 'newpassword123',
-            'password2': 'newpassword123'
+            'password1': 'gdfgdbd123DDD',
+            'password2': 'gdfgdbd123DDD'
         }
         response = self.client.post(
             reverse('users_update', args=[self.user.pk]),
@@ -124,13 +124,13 @@ class ChangeOtherUserProfileTest(TestCase):
             first_name='Test1',
             last_name='User1',
             username='testuser1',
-            password='password123'
+            password='gdfgdbd123DDD'
         )
         self.user2 = User.objects.create_user(
             first_name='Test2',
             last_name='User2',
             username='testuser2',
-            password='password123'
+            password='gdfgdbd123DDD'
         )
 
     def test_authorized_user_cannot_change_other_user_profile(self):
@@ -182,7 +182,7 @@ class UserLoginTest(BaseTestCase):
     def test_user_login(self):
         response = self.client.post(
             reverse('login'),
-            data={'username': 'testuser', 'password': 'password123'}
+            data={'username': 'testuser', 'password': 'gdfgdbd123DDD'}
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('index'))
