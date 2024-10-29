@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from task_manager.views import (BaseIndexView,
+from task_manager.views import (BaseListView,
                                 BaseCreateView,
                                 BaseUpdateView,
                                 BaseDeleteView)
@@ -12,7 +12,7 @@ from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
 
 
-class IndexView(BaseIndexView):
+class IndexView(BaseListView):
     template_name = 'statuses/index.html'
     model = Status
     context_object_name = 'statuses'

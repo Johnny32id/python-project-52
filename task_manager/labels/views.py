@@ -6,13 +6,13 @@ from django.utils.translation import gettext_lazy as _
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
-from task_manager.views import (BaseIndexView,
+from task_manager.views import (BaseListView,
                                 BaseCreateView,
                                 BaseUpdateView,
                                 BaseDeleteView)
 
 
-class IndexView(BaseIndexView):
+class IndexView(BaseListView):
     template_name = 'labels/index.html'
     model = Label
     context_object_name = 'labels'
