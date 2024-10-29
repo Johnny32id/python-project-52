@@ -62,8 +62,7 @@ class CustomCreateView(CustomLoginRequiredMixin,
 class CustomUpdateView(CustomLoginRequiredMixin,
                        SuccessMessageMixin,
                        UpdateView):
-    def get_redirect_url(self):
-        return self.login_url
+    pass
 
 
 class CustomDeleteView(CustomLoginRequiredMixin,
