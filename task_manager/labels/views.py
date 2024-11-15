@@ -6,10 +6,10 @@ from django.utils.translation import gettext_lazy as _
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
-from task_manager.views import (BaseListView,
-                                BaseCreateView,
-                                BaseUpdateView,
-                                BaseDeleteView)
+from task_manager.base_views import (BaseListView,
+                                     BaseCreateView,
+                                     BaseUpdateView,
+                                     BaseDeleteView)
 
 
 class LabelListView(BaseListView):

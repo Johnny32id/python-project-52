@@ -4,11 +4,11 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django_filters.views import FilterView
 
-from task_manager.views import (BaseListView,
-                                BaseCreateView,
-                                BaseUpdateView,
-                                BaseDetailView,
-                                BaseDeleteView)
+from task_manager.base_views import (BaseListView,
+                                     BaseCreateView,
+                                     BaseUpdateView,
+                                     BaseDetailView,
+                                     BaseDeleteView)
 from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.filters import TaskFilterForm
 from task_manager.tasks.models import Task
