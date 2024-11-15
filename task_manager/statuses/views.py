@@ -12,7 +12,7 @@ from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
 
 
-class IndexView(BaseListView):
+class StatusListView(BaseListView):
     template_name = 'statuses/index.html'
     model = Status
     context_object_name = 'statuses'

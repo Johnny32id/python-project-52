@@ -14,7 +14,7 @@ from task_manager.tasks.filters import TaskFilterForm
 from task_manager.tasks.models import Task
 
 
-class IndexView(FilterView, BaseListView):
+class TaskListView(FilterView, BaseListView):
     template_name = 'tasks/index.html'
     model = Task
     filterset_class = TaskFilterForm
