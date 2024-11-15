@@ -11,6 +11,3 @@ class Label(models.Model):
 
     def __str__(self):
         return self.name
-
-    def delete(self, *args, **kwargs):
-        super().delete(*args, **kwargs)
