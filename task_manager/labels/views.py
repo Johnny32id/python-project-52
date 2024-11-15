@@ -12,7 +12,7 @@ from task_manager.views import (BaseListView,
                                 BaseDeleteView)
 
 
-class IndexView(BaseListView):
+class LabelListView(BaseListView):
     template_name = 'labels/index.html'
     model = Label
     context_object_name = 'labels'
