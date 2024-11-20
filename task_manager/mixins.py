@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
 
 LOGIN_URL = reverse_lazy('login')
@@ -35,18 +36,9 @@ class ProtectedErrorHandlerMixin:
         'Cannot delete this object because it is in use'
     )
 
-    def has_related_objects(self, obj):
-        for related_object in obj._meta.related_objects:
-            accessor_name = related_object.get_accessor_name()
-            related_manager = getattr(obj, accessor_name)
-            if related_manager.exists():
-                return True
-        return False
-
     def post(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if self.has_related_objects(obj):
+        try:
+            return super().post(request, *args, **kwargs)  # noqa
+        except ProtectedError:
             messages.error(request, self.protected_error_message)
-            return redirect(self.success_url)
-
-        return super().post(request, *args, **kwargs)
+            return redirect(self.redirect_url)
