@@ -24,14 +24,14 @@ class BaseUpdateView(BaseLoginRequiredMixin,
     pass
 
 
-class BaseDeleteView(BaseLoginRequiredMixin,
+class BaseDeleteView(ProtectedErrorHandlerMixin,
+                     BaseLoginRequiredMixin,
                      SuccessMessageMixin,
                      DeleteView):
     pass
 
 
-class BaseDetailView(ProtectedErrorHandlerMixin,
-                     BaseLoginRequiredMixin,
+class BaseDetailView(BaseLoginRequiredMixin,
                      SuccessMessageMixin,
                      DetailView):
     pass
