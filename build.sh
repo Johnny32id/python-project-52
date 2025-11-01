@@ -37,10 +37,10 @@ fi
 # Set Poetry to use the correct Python
 if [ -n "$PYTHON_312_PATH" ] && [ -f "$PYTHON_312_PATH" ]; then
     echo "Using Python: $PYTHON_312_PATH"
-    poetry env use "$PYTHON_312_PATH" --force
+    poetry env use "$PYTHON_312_PATH"
 else
     echo "Warning: Python 3.12 not found, using default python3"
-    poetry env use python3 --force
+    poetry env use python3
 fi
 
 # Modify this line as needed for your package manager (pip, poetry, etc.)
