@@ -6,13 +6,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Построение путей внутри проекта: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+# Быстрые настройки для разработки - не подходят для production
+# См. https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# ПРЕДУПРЕЖДЕНИЕ БЕЗОПАСНОСТИ: храните секретный ключ в секрете в production!
 SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY:
     raise ValueError(
@@ -20,7 +20,7 @@ if not SECRET_KEY:
         'Установите SECRET_KEY в файле .env или переменных окружения.'
     )
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# ПРЕДУПРЕЖДЕНИЕ БЕЗОПАСНОСТИ: не запускайте с включенным debug в production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['webserver', 'localhost', '127.0.0.1', '0.0.0.0', 'testserver']
@@ -29,7 +29,7 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# Application definition
+# Определение приложений
 
 INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    # default rollbar 'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+    # по умолчанию rollbar 'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
     "task_manager.rollbar_middleware.CustomRollbarNotifierMiddleware",
 ]
 
@@ -83,7 +83,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'task_manager.wsgi.application'
 
-# Database
+# База данных
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
@@ -101,7 +101,7 @@ if os.getenv('DATABASE_URL'):
                                          conn_max_age=600),
     }
 
-# Password validation
+# Валидация паролей
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -125,7 +125,7 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
 
-# Internationalization
+# Интернационализация
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru'
@@ -145,24 +145,24 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Статические файлы (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'task_manager/static')
 
-# This production code might break development mode, so we check whether we're
-# in DEBUG mode
+# Этот код для production может сломать режим разработки, поэтому проверяем
+# режим DEBUG
 if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles`
-    # (this is specific to Render)
+    # Указываем Django копировать статические файлы в путь `staticfiles`
+    # (это специфично для Render)
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to
-    # reduce disk use and renames the files with unique names for each version
-    # to support long-term caching
+    # Включаем бэкенд хранения WhiteNoise, который сжимает статические файлы
+    # для уменьшения использования диска и переименовывает файлы с уникальными
+    # именами для каждой версии для поддержки долгосрочного кэширования
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Default primary key field type
+# Тип поля первичного ключа по умолчанию
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

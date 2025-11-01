@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# Exit on error
+# Выход при ошибке
 set -o errexit
 
-# Ensure Poetry uses the correct Python version
-# Remove Poetry's own venv that might use wrong Python version
+# Убеждаемся, что Poetry использует правильную версию Python
+# Удаляем собственный venv Poetry, который может использовать неправильную версию Python
 if [ -d "/opt/render/project/poetry/venv" ]; then
-    echo "Removing Poetry's venv with wrong Python version..."
+    echo "Удаление venv Poetry с неправильной версией Python..."
     rm -rf /opt/render/project/poetry/venv 2>/dev/null || true
 fi
 
-# Remove all existing Poetry environments to force recreation
+# Удаляем все существующие окружения Poetry для принудительного пересоздания
 if [ -d "$HOME/.cache/pypoetry/virtualenvs" ]; then
     rm -rf "$HOME/.cache/pypoetry/virtualenvs"/* 2>/dev/null || true
 fi
@@ -17,37 +17,37 @@ if [ -d ".venv" ]; then
     rm -rf .venv 2>/dev/null || true
 fi
 
-# Find Python 3.12 installed by Render
+# Ищем Python 3.12, установленный Render
 PYTHON_312_PATH=""
 if [ -d "/opt/render/project/python" ]; then
-    # Look for Python 3.12.x directory
+    # Ищем директорию Python 3.12.x
     PYTHON_DIR=$(find /opt/render/project/python -maxdepth 1 -type d -name "Python-3.12*" | head -1)
     if [ -n "$PYTHON_DIR" ] && [ -f "$PYTHON_DIR/bin/python" ]; then
         PYTHON_312_PATH="$PYTHON_DIR/bin/python"
     fi
 fi
 
-# Fallback to system python3.12
+# Запасной вариант: системный python3.12
 if [ -z "$PYTHON_312_PATH" ]; then
     if command -v python3.12 &> /dev/null; then
         PYTHON_312_PATH=$(command -v python3.12)
     fi
 fi
 
-# Set Poetry to use the correct Python
+# Настраиваем Poetry для использования правильного Python
 if [ -n "$PYTHON_312_PATH" ] && [ -f "$PYTHON_312_PATH" ]; then
-    echo "Using Python: $PYTHON_312_PATH"
+    echo "Используется Python: $PYTHON_312_PATH"
     poetry env use "$PYTHON_312_PATH"
 else
-    echo "Warning: Python 3.12 not found, using default python3"
+    echo "Предупреждение: Python 3.12 не найден, используется python3 по умолчанию"
     poetry env use python3
 fi
 
-# Modify this line as needed for your package manager (pip, poetry, etc.)
+# Измените эту строку при необходимости для вашего менеджера пакетов (pip, poetry и т.д.)
 make install
 
-# Convert static asset files
+# Преобразование статических файлов
 make collectstatic
 
-# Apply any outstanding database migrations
+# Применение всех ожидающих миграций базы данных
 make migrate
