@@ -57,12 +57,21 @@ if [ -n "$PYTHON_312_PATH" ] && [ -f "$PYTHON_312_PATH" ]; then
     if [ -f "$PYTHON_DIR/bin/python" ]; then
         "$PYTHON_DIR/bin/python" --version
     fi
+    # Настраиваем Poetry конфигурацию
+    poetry config virtualenvs.prefer-active-python true
     # Настраиваем Poetry с явным указанием пути к Python
     poetry env use "$PYTHON_312_PATH"
     # Устанавливаем переменную окружения для Poetry
     export POETRY_PYTHON="$PYTHON_312_PATH"
     # Проверяем, что Poetry видит правильную версию
-    poetry env info | head -5
+    echo "Информация о окружении Poetry:"
+    poetry env info | head -10
+    # Проверяем версию Python в созданном venv
+    VENV_PYTHON=$(poetry env info --path)/bin/python
+    if [ -f "$VENV_PYTHON" ]; then
+        echo "Версия Python в venv:"
+        "$VENV_PYTHON" --version
+    fi
 else
     echo "Предупреждение: Python 3.12 не найден, используется python3 по умолчанию"
     poetry env use python3
