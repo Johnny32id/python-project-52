@@ -3,19 +3,28 @@
 set -o errexit
 
 # Ensure Poetry uses the correct Python version
-# Find Python 3.12 installed by Render
-PYTHON_312_PATH=""
-if [ -d "/opt/render/project/python" ]; then
-    PYTHON_312_PATH=$(find /opt/render/project/python -type f -name "python*3.12*" -o -path "*/Python-3.12*/bin/python" | head -1)
-fi
-
-if [ -z "$PYTHON_312_PATH" ] && command -v python3.12 &> /dev/null; then
-    PYTHON_312_PATH=$(command -v python3.12)
-fi
-
-if [ -z "$PYTHON_312_PATH" ]; then
-    # Fallback to any Python 3.12
-    PYTHON_312_PATH=$(which python3.12 2>/dev/null || echo "")
+# Find Python 3.12 installed by Render (based on PYTHON_VERSION)
+if [ -n "$PYTHON_VERSION" ]; then
+    # Look for Python in Render's installation path
+    PYTHON_MAJOR_MINOR=$(echo "$PYTHON_VERSION" | cut -d. -f1,2)
+    PYTHON_FULL_PATH=""
+    
+    # Check Render's Python installation directory
+    if [ -d "/opt/render/project/python" ]; then
+        PYTHON_FULL_PATH=$(find /opt/render/project/python -type d -name "Python-$PYTHON_VERSION" -o -name "Python-$PYTHON_MAJOR_MINOR*" | head -1)
+        if [ -n "$PYTHON_FULL_PATH" ] && [ -f "$PYTHON_FULL_PATH/bin/python" ]; then
+            PYTHON_FULL_PATH="$PYTHON_FULL_PATH/bin/python"
+        fi
+    fi
+    
+    # Fallback to system python with version
+    if [ -z "$PYTHON_FULL_PATH" ]; then
+        if command -v "python$PYTHON_VERSION" &> /dev/null; then
+            PYTHON_FULL_PATH=$(command -v "python$PYTHON_VERSION")
+        elif command -v "python$PYTHON_MAJOR_MINOR" &> /dev/null; then
+            PYTHON_FULL_PATH=$(command -v "python$PYTHON_MAJOR_MINOR")
+        fi
+    fi
 fi
 
 # Remove all existing Poetry environments to force recreation
@@ -27,8 +36,12 @@ if [ -d ".venv" ]; then
 fi
 
 # Set Poetry to use the correct Python
-if [ -n "$PYTHON_312_PATH" ] && [ -f "$PYTHON_312_PATH" ]; then
-    poetry env use "$PYTHON_312_PATH"
+if [ -n "$PYTHON_FULL_PATH" ] && [ -f "$PYTHON_FULL_PATH" ]; then
+    echo "Using Python: $PYTHON_FULL_PATH"
+    poetry env use "$PYTHON_FULL_PATH"
+elif command -v python3.12 &> /dev/null; then
+    echo "Using Python: python3.12"
+    poetry env use python3.12
 else
     echo "Warning: Python 3.12 not found, using default python3"
     poetry env use python3
