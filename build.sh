@@ -44,14 +44,21 @@ if [ -n "$PYTHON_312_PATH" ] && [ -f "$PYTHON_312_PATH" ]; then
     echo "Используется Python: $PYTHON_312_PATH"
     # Добавляем директорию Python в PATH для доступа к python
     export PATH="$PYTHON_DIR/bin:$PATH"
-    # Удаляем все существующие venv Poetry, чтобы пересоздать с правильным Python
+    # Создаем симлинк python -> python3.12 если его нет
+    if [ -f "$PYTHON_DIR/bin/python3.12" ] && [ ! -f "$PYTHON_DIR/bin/python" ]; then
+        echo "Создание симлинка python -> python3.12..."
+        ln -sf python3.12 "$PYTHON_DIR/bin/python"
+    fi
+    # Удаляем все существующие venv Poetry
     poetry env remove --all 2>/dev/null || true
     # Проверяем версию Python перед использованием
     "$PYTHON_312_PATH" --version
+    # Убеждаемся, что python доступен
+    if [ -f "$PYTHON_DIR/bin/python" ]; then
+        "$PYTHON_DIR/bin/python" --version
+    fi
     # Настраиваем Poetry с явным указанием пути к Python
     poetry env use "$PYTHON_312_PATH"
-    # Проверяем, что Poetry использует правильную версию
-    poetry env info
 else
     echo "Предупреждение: Python 3.12 не найден, используется python3 по умолчанию"
     poetry env use python3
