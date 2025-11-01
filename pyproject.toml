@@ -8,7 +8,7 @@ packages = [{include = "task_manager"}]
 
 
 [tool.poetry.dependencies]
-python = ">=3.12,<4.0"
+python = ">=3.11,<4.0"
 django = "^5.1.1"
 python-dotenv = "^1.0.1"
 dj-database-url = "^2.2.0"
