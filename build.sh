@@ -22,8 +22,13 @@ PYTHON_312_PATH=""
 if [ -d "/opt/render/project/python" ]; then
     # Ищем директорию Python 3.12.x
     PYTHON_DIR=$(find /opt/render/project/python -maxdepth 1 -type d -name "Python-3.12*" | head -1)
-    if [ -n "$PYTHON_DIR" ] && [ -f "$PYTHON_DIR/bin/python" ]; then
-        PYTHON_312_PATH="$PYTHON_DIR/bin/python"
+    if [ -n "$PYTHON_DIR" ]; then
+        # Проверяем разные варианты имени исполняемого файла
+        if [ -f "$PYTHON_DIR/bin/python3.12" ]; then
+            PYTHON_312_PATH="$PYTHON_DIR/bin/python3.12"
+        elif [ -f "$PYTHON_DIR/bin/python" ]; then
+            PYTHON_312_PATH="$PYTHON_DIR/bin/python"
+        fi
     fi
 fi
 
@@ -37,7 +42,11 @@ fi
 # Настраиваем Poetry для использования правильного Python
 if [ -n "$PYTHON_312_PATH" ] && [ -f "$PYTHON_312_PATH" ]; then
     echo "Используется Python: $PYTHON_312_PATH"
-    poetry env use "$PYTHON_312_PATH"
+    poetry env use "$PYTHON_312_PATH" || {
+        echo "Ошибка при настройке Poetry, пробуем создать venv вручную..."
+        export PATH="$PYTHON_DIR/bin:$PATH"
+        poetry env use "$PYTHON_312_PATH"
+    }
 else
     echo "Предупреждение: Python 3.12 не найден, используется python3 по умолчанию"
     poetry env use python3
