@@ -3,28 +3,10 @@
 set -o errexit
 
 # Ensure Poetry uses the correct Python version
-# Find Python 3.12 installed by Render (based on PYTHON_VERSION)
-if [ -n "$PYTHON_VERSION" ]; then
-    # Look for Python in Render's installation path
-    PYTHON_MAJOR_MINOR=$(echo "$PYTHON_VERSION" | cut -d. -f1,2)
-    PYTHON_FULL_PATH=""
-    
-    # Check Render's Python installation directory
-    if [ -d "/opt/render/project/python" ]; then
-        PYTHON_FULL_PATH=$(find /opt/render/project/python -type d -name "Python-$PYTHON_VERSION" -o -name "Python-$PYTHON_MAJOR_MINOR*" | head -1)
-        if [ -n "$PYTHON_FULL_PATH" ] && [ -f "$PYTHON_FULL_PATH/bin/python" ]; then
-            PYTHON_FULL_PATH="$PYTHON_FULL_PATH/bin/python"
-        fi
-    fi
-    
-    # Fallback to system python with version
-    if [ -z "$PYTHON_FULL_PATH" ]; then
-        if command -v "python$PYTHON_VERSION" &> /dev/null; then
-            PYTHON_FULL_PATH=$(command -v "python$PYTHON_VERSION")
-        elif command -v "python$PYTHON_MAJOR_MINOR" &> /dev/null; then
-            PYTHON_FULL_PATH=$(command -v "python$PYTHON_MAJOR_MINOR")
-        fi
-    fi
+# Remove Poetry's own venv that might use wrong Python version
+if [ -d "/opt/render/project/poetry/venv" ]; then
+    echo "Removing Poetry's venv with wrong Python version..."
+    rm -rf /opt/render/project/poetry/venv 2>/dev/null || true
 fi
 
 # Remove all existing Poetry environments to force recreation
@@ -35,16 +17,30 @@ if [ -d ".venv" ]; then
     rm -rf .venv 2>/dev/null || true
 fi
 
+# Find Python 3.12 installed by Render
+PYTHON_312_PATH=""
+if [ -d "/opt/render/project/python" ]; then
+    # Look for Python 3.12.x directory
+    PYTHON_DIR=$(find /opt/render/project/python -maxdepth 1 -type d -name "Python-3.12*" | head -1)
+    if [ -n "$PYTHON_DIR" ] && [ -f "$PYTHON_DIR/bin/python" ]; then
+        PYTHON_312_PATH="$PYTHON_DIR/bin/python"
+    fi
+fi
+
+# Fallback to system python3.12
+if [ -z "$PYTHON_312_PATH" ]; then
+    if command -v python3.12 &> /dev/null; then
+        PYTHON_312_PATH=$(command -v python3.12)
+    fi
+fi
+
 # Set Poetry to use the correct Python
-if [ -n "$PYTHON_FULL_PATH" ] && [ -f "$PYTHON_FULL_PATH" ]; then
-    echo "Using Python: $PYTHON_FULL_PATH"
-    poetry env use "$PYTHON_FULL_PATH"
-elif command -v python3.12 &> /dev/null; then
-    echo "Using Python: python3.12"
-    poetry env use python3.12
+if [ -n "$PYTHON_312_PATH" ] && [ -f "$PYTHON_312_PATH" ]; then
+    echo "Using Python: $PYTHON_312_PATH"
+    poetry env use "$PYTHON_312_PATH" --force
 else
     echo "Warning: Python 3.12 not found, using default python3"
-    poetry env use python3
+    poetry env use python3 --force
 fi
 
 # Modify this line as needed for your package manager (pip, poetry, etc.)
