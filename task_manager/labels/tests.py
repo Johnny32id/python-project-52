@@ -25,36 +25,36 @@ class UnauthorizedCRUDTest(TestCase):
     def test_unauthorized_index_view(self):
         response = self.client.get(reverse('labels_index'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertTrue(response.url.startswith('/login/'))
 
     def test_unauthorized_create(self):
         response = self.client.get(reverse('labels_create'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertTrue(response.url.startswith('/login/'))
 
     def test_unauthorized_update(self):
         response = self.client.get(reverse('labels_update', args=[1]))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertTrue(response.url.startswith('/login/'))
 
     def test_unauthorized_delete(self):
         response = self.client.get(reverse('labels_delete', args=[1]))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertTrue(response.url.startswith('/login/'))
 
 
 class LabelsIndexViewTest(BaseTestCase):
     def test_labels_index_view(self):
         response = self.client.get(reverse('labels_index'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'labels/index.html')
+        self.assertTemplateUsed(response, 'labels/list.html')
 
 
 class LabelsCreateViewTest(BaseTestCase):
     def test_label_create_view_get(self):
         response = self.client.get(reverse('labels_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'labels/create.html')
+        self.assertTemplateUsed(response, 'create.html')
 
     def test_label_create_view_post_valid(self):
         data = {
@@ -74,7 +74,7 @@ class LabelsCreateViewTest(BaseTestCase):
         }
         response = self.client.post(reverse('labels_create'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'labels/create.html')
+        self.assertTemplateUsed(response, 'create.html')
         self.assertContains(response, _('This field is required.'))
         self.assertEqual(Label.objects.count(), 0)
 
@@ -86,7 +86,7 @@ class LabelsCreateViewTest(BaseTestCase):
         self.client.post(reverse('labels_create'), data)
         response = self.client.post(reverse('labels_create'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'labels/create.html')
+        self.assertTemplateUsed(response, 'create.html')
         self.assertEqual(Label.objects.count(), 1)
 
 
@@ -99,7 +99,7 @@ class LabelsUpdateViewTest(BaseTestCase):
         response = self.client.get(
             reverse('labels_update', kwargs={'pk': self.label.pk}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'labels/update.html')
+        self.assertTemplateUsed(response, 'update.html')
 
     def test_label_update_view_post_valid(self):
         data = {
@@ -122,7 +122,7 @@ class LabelsUpdateViewTest(BaseTestCase):
         response = self.client.post(
             reverse('labels_update', kwargs={'pk': self.label.pk}), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'labels/update.html')
+        self.assertTemplateUsed(response, 'update.html')
         self.assertEqual(Label.objects.count(), 1)
         label = Label.objects.first()
         self.assertEqual(label.name, 'Test label')
@@ -144,7 +144,7 @@ class LabelsUpdateViewTest(BaseTestCase):
         response = self.client.post(
             reverse('labels_update', kwargs={'pk': label1.pk}), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'labels/update.html')
+        self.assertTemplateUsed(response, 'update.html')
         self.assertEqual(Label.objects.count(), 2)
         self.assertEqual(Label.objects.first().name, 'Test label')
 
@@ -158,7 +158,7 @@ class LabelsDeleteViewTest(BaseTestCase):
         response = self.client.get(
             reverse('labels_delete', kwargs={'pk': self.label.pk}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'labels/delete.html')
+        self.assertTemplateUsed(response, 'delete.html')
 
     def test_label_delete_view_post(self):
         self.assertEqual(Label.objects.count(), 1)

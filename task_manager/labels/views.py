@@ -1,52 +1,51 @@
-from django.contrib import messages
-from django.db.models import ProtectedError
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from task_manager.labels.forms import LabelForm
-from task_manager.labels.models import Label
 from task_manager.base_views import (BaseListView,
                                      BaseCreateView,
                                      BaseUpdateView,
                                      BaseDeleteView)
+from task_manager.labels.forms import LabelForm
+from task_manager.labels.models import Label
 
 
 class LabelListView(BaseListView):
-    template_name = 'labels/index.html'
+    """Представление для отображения списка меток."""
+
+    template_name = 'labels/list.html'
     model = Label
     context_object_name = 'labels'
 
 
 class LabelCreateView(BaseCreateView):
-    template_name = 'labels/create.html'
+    """Представление для создания новой метки."""
+
     form_class = LabelForm
     model = Label
     success_url = reverse_lazy('labels_index')
     success_message = _('Label successfully created')
+    create_title = _('Create label')
+    action_url = 'labels_create'
+    button_label = _('Create')
 
 
 class LabelUpdateView(BaseUpdateView):
-    template_name = 'labels/update.html'
+    """Представление для обновления метки."""
+
     form_class = LabelForm
     model = Label
     success_url = reverse_lazy('labels_index')
     success_message = _('Label successfully updated')
+    update_title = _('Change label')
+    action_url = 'labels_update'
+    button_label = _('Update')
 
 
 class LabelDeleteView(BaseDeleteView):
-    template_name = 'labels/delete.html'
+    """Представление для удаления метки."""
+
     model = Label
     success_url = reverse_lazy('labels_index')
     success_message = _('Label successfully deleted')
-    error_message = _('Cannot delete label because it is in use')
-
-    def post(self, request, *args, **kwargs):
-        try:
-            response = super().delete(request, *args, **kwargs)
-            if response.status_code == 302:
-                messages.success(request, self.success_message)
-            return response
-        except ProtectedError:
-            messages.error(request, self.error_message)
-            return redirect(self.success_url)
+    protected_error_message = _('Cannot delete label because it is in use')
+    delete_title = _('Deleting a label')

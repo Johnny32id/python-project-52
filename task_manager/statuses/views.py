@@ -1,6 +1,3 @@
-from django.contrib import messages
-from django.db.models import ProtectedError
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
@@ -13,40 +10,42 @@ from task_manager.statuses.models import Status
 
 
 class StatusListView(BaseListView):
-    template_name = 'statuses/index.html'
+    """Представление для отображения списка статусов."""
+
+    template_name = 'statuses/list.html'
     model = Status
     context_object_name = 'statuses'
 
 
 class StatusCreateView(BaseCreateView):
-    template_name = 'statuses/create.html'
+    """Представление для создания нового статуса."""
+
     form_class = StatusForm
     model = Status
     success_url = reverse_lazy('statuses_index')
     success_message = _('Status successfully created')
+    create_title = _('Create status')
+    action_url = 'statuses_create'
+    button_label = _('Create')
 
 
 class StatusUpdateView(BaseUpdateView):
-    template_name = 'statuses/update.html'
+    """Представление для обновления статуса."""
+
     form_class = StatusForm
     model = Status
     success_url = reverse_lazy('statuses_index')
     success_message = _('Status successfully updated')
+    update_title = _('Change status')
+    action_url = 'statuses_update'
+    button_label = _('Change')
 
 
 class StatusDeleteView(BaseDeleteView):
-    template_name = 'statuses/delete.html'
+    """Представление для удаления статуса."""
+
     model = Status
     success_url = reverse_lazy('statuses_index')
     success_message = _('Status successfully deleted')
-    error_message = _('Cannot delete status because it is in use')
-
-    def post(self, request, *args, **kwargs):
-        try:
-            response = super().delete(request, *args, **kwargs)
-            if response.status_code == 302:
-                messages.success(request, self.success_message)
-            return response
-        except ProtectedError:
-            messages.error(request, self.error_message)
-            return redirect(self.success_url)
+    protected_error_message = _('Cannot delete status because it is in use')
+    delete_title = _('Deleting a status')

@@ -1,12 +1,18 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.db import models
+
 from task_manager.tasks.models import Task
 
 User = get_user_model()
 
 
 class TaskForm(forms.ModelForm):
+    """Форма для создания и обновления задачи."""
+
     class Meta:
+        """Метаданные формы."""
+
         model = Task
         fields = (
             'name',
@@ -15,4 +21,3 @@ class TaskForm(forms.ModelForm):
             'executor',
             'labels',
         )
-        required_fields = ('name', 'description', 'status')

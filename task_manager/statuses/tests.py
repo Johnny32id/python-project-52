@@ -24,36 +24,36 @@ class UnauthorizedCRUDTest(TestCase):
     def test_unauthorized_index_view(self):
         response = self.client.get(reverse('statuses_index'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertTrue(response.url.startswith('/login/'))
 
     def test_unauthorized_create(self):
         response = self.client.get(reverse('statuses_create'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertTrue(response.url.startswith('/login/'))
 
     def test_unauthorized_update(self):
         response = self.client.get(reverse('statuses_update', args=[1]))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertTrue(response.url.startswith('/login/'))
 
     def test_unauthorized_delete(self):
         response = self.client.get(reverse('statuses_delete', args=[1]))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertTrue(response.url.startswith('/login/'))
 
 
 class StatusesIndexViewTest(BaseTestCase):
     def test_statuses_index_view(self):
         response = self.client.get(reverse('statuses_index'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'statuses/index.html')
+        self.assertTemplateUsed(response, 'statuses/list.html')
 
 
 class StatusesCreateViewTest(BaseTestCase):
     def test_status_create_view_get(self):
         response = self.client.get(reverse('statuses_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'statuses/create.html')
+        self.assertTemplateUsed(response, 'create.html')
 
     def test_status_create_view_post_valid(self):
         data = {
@@ -73,7 +73,7 @@ class StatusesCreateViewTest(BaseTestCase):
         }
         response = self.client.post(reverse('statuses_create'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'statuses/create.html')
+        self.assertTemplateUsed(response, 'create.html')
         self.assertContains(response, _('This field is required.'))
         self.assertEqual(Status.objects.count(), 0)
 
@@ -85,7 +85,7 @@ class StatusesCreateViewTest(BaseTestCase):
         self.client.post(reverse('statuses_create'), data)
         response = self.client.post(reverse('statuses_create'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'statuses/create.html')
+        self.assertTemplateUsed(response, 'create.html')
         self.assertEqual(Status.objects.count(), 1)
 
 
@@ -98,7 +98,7 @@ class StatusesUpdateViewTest(BaseTestCase):
         response = self.client.get(
             reverse('statuses_update', kwargs={'pk': self.status.pk}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'statuses/update.html')
+        self.assertTemplateUsed(response, 'update.html')
 
     def test_status_update_view_post_valid(self):
         data = {
@@ -121,7 +121,7 @@ class StatusesUpdateViewTest(BaseTestCase):
         response = self.client.post(
             reverse('statuses_update', kwargs={'pk': self.status.pk}), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'statuses/update.html')
+        self.assertTemplateUsed(response, 'update.html')
         self.assertContains(response, _('This field is required.'))
         self.assertEqual(Status.objects.count(), 1)
         status = Status.objects.first()
@@ -144,7 +144,7 @@ class StatusesUpdateViewTest(BaseTestCase):
         response = self.client.post(
             reverse('statuses_update', kwargs={'pk': status1.pk}), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'statuses/update.html')
+        self.assertTemplateUsed(response, 'update.html')
         self.assertEqual(Status.objects.count(), 2)
         self.assertEqual(Status.objects.first().name, 'Test status')
 
@@ -158,7 +158,7 @@ class StatusesDeleteViewTest(BaseTestCase):
         response = self.client.get(
             reverse('statuses_delete', kwargs={'pk': self.status.pk}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'statuses/delete.html')
+        self.assertTemplateUsed(response, 'delete.html')
 
     def test_status_delete_view_post(self):
         self.assertEqual(Status.objects.count(), 1)

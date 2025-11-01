@@ -1,19 +1,24 @@
+from typing import Dict, List, Any
+
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
 
-def navbar(request):
+def navbar(request: HttpRequest) -> Dict[str, List[Dict[str, Any]]]:
     """
-    Provides the navbar items for the navigation bar.
+    Предоставляет элементы навигационной панели.
 
-    It checks if the user is authenticated and returns the corresponding
-    navbar items. If the user is authenticated, it returns the links to the
-    users, statuses, labels, and tasks pages. If the user is not authenticated,
-    it returns the links to the login and registration pages.
+    Проверяет, авторизован ли пользователь, и возвращает соответствующие
+    элементы навигационной панели. Если пользователь авторизован, возвращает
+    ссылки на страницы пользователей, статусов, меток и задач. Если пользователь
+    не авторизован, возвращает ссылки на страницы входа и регистрации.
 
-    :param request: The HTTP request.
-    :type request: HttpRequest
-    :return: A dictionary containing the navbar items.
-    :rtype: dict
+    Args:
+        request: HTTP запрос от клиента.
+
+    Returns:
+        Dict[str, List[Dict[str, Any]]]: Словарь, содержащий элементы навигационной панели.
+            Ключ 'navbar_items' содержит список словарей с элементами навигации.
     """
     user = request.user
     navbar_items = [{
@@ -42,7 +47,7 @@ def navbar(request):
             'align': ''
         })
         navbar_items.append({
-            'label': _('Wellcome') + ', ' + user.username,
+            'label': _('Welcome') + ', ' + user.username,
             'class': 'nav-link',
             'align': 'ms-auto'
         })

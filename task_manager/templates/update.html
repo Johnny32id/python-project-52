@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <h1 class="my-4">{% trans title %}</h1>
+  <form action="{% url action_url object.pk %}" method="post">
+    {% trans button_label as action %}
+    {% include 'form.html' with action=action %}
+  </form>
+
+{% endblock %}
+
