@@ -1,26 +1,40 @@
-### Hexlet tests and linter status:
+### Статус тестов и линтера Hexlet:
 [![Actions Status](https://github.com/Johnny32id/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Johnny32id/python-project-52/actions)
 [![Actions Status](https://github.com/Johnny32id/python-project-52/actions/workflows/django.yml/badge.svg)](https://github.com/Johnny32id/python-project-52/actions)
-### Try task manager
-(https://python-project-52-u1nd.onrender.com)
 
-### Features
+### 🚀 Демонстрация работы проекта
 
-* Set tasks;
-* Filter the tasks displayed by executors, author, labels and status;
-* User authentication and registration;
-* Change task status;
-* Set multiple tasks labels;
-* Assign executors;
+**[Попробовать Task Manager](https://python-project-52-u1nd.onrender.com)**
 
-### How to install
+### Возможности
 
-* Create .env file and set it like .env.example
-* make build
-* make install
+* Создание и управление задачами;
+* Фильтрация задач по исполнителю, автору, меткам и статусу;
+* Аутентификация и регистрация пользователей;
+* Изменение статуса задачи;
+* Добавление нескольких меток к задаче;
+* Назначение исполнителей;
 
-### How to start server
-* make start
+### Установка
 
- ### How to start development mode
- * make dev
+1. Создайте файл `.env` и настройте его по аналогии с `.env.example`
+2. Выполните сборку проекта:
+   ```bash
+   make build
+   ```
+3. Установите зависимости:
+   ```bash
+   make install
+   ```
+
+### Запуск сервера
+
+```bash
+make start
+```
+
+### Запуск в режиме разработки
+
+```bash
+make dev
+```
