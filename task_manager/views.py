@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
 
 if TYPE_CHECKING:
-    from django.core.exceptions import ValidationError
+    pass
 
 
 def index(request: HttpRequest) -> HttpResponse:

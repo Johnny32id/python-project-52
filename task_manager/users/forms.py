@@ -39,7 +39,8 @@ class UserForm(UserCreationForm):
             str: Очищенное имя пользователя.
 
         Raises:
-            forms.ValidationError: Если пользователь с таким именем уже существует.
+            forms.ValidationError: Если пользователь с таким именем уже
+                существует.
         """
         username = self.cleaned_data['username']
         error_message = _('A user with that username already exists.')

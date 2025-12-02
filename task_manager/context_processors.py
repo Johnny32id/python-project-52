@@ -17,8 +17,9 @@ def navbar(request: HttpRequest) -> Dict[str, List[Dict[str, Any]]]:
         request: HTTP запрос от клиента.
 
     Returns:
-        Dict[str, List[Dict[str, Any]]]: Словарь, содержащий элементы навигационной панели.
-            Ключ 'navbar_items' содержит список словарей с элементами навигации.
+        Dict[str, List[Dict[str, Any]]]: Словарь, содержащий элементы
+            навигационной панели. Ключ 'navbar_items' содержит список словарей
+            с элементами навигации.
     """
     user = request.user
     navbar_items = [{

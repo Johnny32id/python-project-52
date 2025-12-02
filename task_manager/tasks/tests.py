@@ -21,7 +21,10 @@ class BaseTestCase(TestCase):
 
         self.status = Status.objects.create(name='Test status')
         self.author = self.user
-        self.executor = User.objects.create_user(username='executor', password='12345')
+        self.executor = User.objects.create_user(
+            username='executor',
+            password='12345'
+        )
         self.label = Label.objects.create(name='Test label')
 
 
@@ -57,8 +60,11 @@ class UnauthorizedCRUDTest(TestCase):
         # Редирект может быть на /login/ (если сначала проверка авторизации)
         # или на /tasks/ (если сначала проверка автора задачи)
         # Проверяем что это редирект
-        self.assertIn(response.url, ['/tasks/', '/tasks', reverse('tasks_index')] + 
-                     [f'/login/?next=/tasks/{task.pk}/delete/'])
+        self.assertIn(
+            response.url,
+            ['/tasks/', '/tasks', reverse('tasks_index')] +
+            [f'/login/?next=/tasks/{task.pk}/delete/']
+        )
 
 
 class TasksIndexViewTest(BaseTestCase):
@@ -143,7 +149,9 @@ class TasksUpdateViewTest(BaseTestCase):
         self.task = Task.objects.first()
 
     def test_tasks_update_view_get(self):
-        response = self.client.get(reverse('tasks_update', kwargs={'pk': self.task.id}))
+        response = self.client.get(
+            reverse('tasks_update', kwargs={'pk': self.task.id})
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'update.html')
 

@@ -5,7 +5,9 @@ from rollbar.contrib.django.middleware import RollbarNotifierMiddleware
 
 
 class CustomRollbarNotifierMiddleware(RollbarNotifierMiddleware):
-    """Кастомный middleware для Rollbar с добавлением информации о пользователе."""
+    """
+    Кастомный middleware для Rollbar с добавлением информации о пользователе.
+    """
 
     def get_payload_data(
         self, request: HttpRequest, exc: Optional[Exception]
