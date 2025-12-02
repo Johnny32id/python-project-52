@@ -33,6 +33,8 @@ class AuthAndProfileOwnershipMixin(UserPassesTestMixin):
                 иначе False.
         """
         user_id = self.kwargs.get('pk')
+        if user_id is None:
+            return False
         return self.request.user.pk == user_id
 
 
