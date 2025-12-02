@@ -3,15 +3,15 @@ from typing import Any, Dict
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
-from task_manager.base_views import BaseListView, BaseUpdateView, BaseDeleteView
+from task_manager.base_views import BaseUpdateView, BaseDeleteView
 from task_manager.mixins import AuthAndProfileOwnershipMixin
 from task_manager.users.forms import UserForm
 from task_manager.users.models import User
 
 
-class UserListView(BaseListView):
+class UserListView(ListView):
     """Представление для отображения списка пользователей."""
 
     template_name = 'users/list.html'
