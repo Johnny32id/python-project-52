@@ -33,7 +33,7 @@ jobs:
         poetry run pytest --cov=task_manager --cov-report=xml task_manager
     - name: SonarCloud Scan
       if: matrix.python-version == '3.12'
-      uses: SonarSource/sonarcloud-github-action@master
+      uses: SonarSource/sonarqube-scan-action@v6
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
