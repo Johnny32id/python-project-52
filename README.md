@@ -1,6 +1,7 @@
 ### Статус тестов и линтера Hexlet:
 [![Actions Status](https://github.com/Johnny32id/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Johnny32id/python-project-52/actions)
 [![Actions Status](https://github.com/Johnny32id/python-project-52/actions/workflows/django.yml/badge.svg)](https://github.com/Johnny32id/python-project-52/actions)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Johnny32id_python-project-52&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Johnny32id_python-project-52)
 
 ### 🚀 Демонстрация работы проекта
 

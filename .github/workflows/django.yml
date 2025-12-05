@@ -18,6 +18,8 @@ jobs:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
@@ -26,6 +28,14 @@ jobs:
       run: |
         pip install poetry
         make install
-    - name: Run Tests
+    - name: Run Tests with Coverage
       run: |
-        make test
+        poetry run pytest --cov=task_manager --cov-report=xml task_manager
+    - name: SonarCloud Scan
+      if: matrix.python-version == '3.12'
+      uses: SonarSource/sonarqube-scan-action@v4.1.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.python.coverage.reportPaths=coverage.xml
